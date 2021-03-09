@@ -1,0 +1,211 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>how to rxjs</title><link rel="stylesheet" href="src.4a46e35b.css"></head><body> <div class="reveal"> <div class="slides"> <section data-markdown="" data-separator="^\r?\n---\r?\n$" data-separator-vertical="^\r?\n----\r?\n$" data-separator-notes="^Note:"> <script type="text/template">
+            # How to rxjs
+
+            Presenter: _Ryan Sheehan_
+
+            ---
+
+            ## What is rxjs
+
+            >"A library for composing asynchronous and event-based programs by using
+            observable sequences."
+
+            ----
+
+            ## Observable sequences
+
+            Has zero or more events
+
+            * User Input
+            * Fetching Data
+            * Data Streams
+            * Long Computations
+
+            ----
+
+            ## Observables fill a gap
+
+            |   | Pull | Push |
+            | ----- | ----- | ------ |
+            | **One** | Function | Promise |
+            | **Many** | Generator | Observable |
+
+            ----
+
+            ## Mental Visualization
+
+            ![observable](assets/observable.gif)
+
+            > "Hey it's a timeline!"
+
+            ----
+
+            ## Exercise 1
+
+            Introduce the [rxviz visualizer](https://rxviz.tylerdev.io)<!-- .element: target="_blank" -->
+
+            ----
+
+            <!-- .slide: data-background-iframe="https://rxviz.tylerdev.io" data-background-interactive data-background-size="cover" -->
+
+            ---
+
+            ## Observable Events
+
+            ```typescript
+            interface Observer<T> {
+              closed?: boolean
+              next: (value: T) => void
+              error: (err: any) => void
+              complete: () => void
+            }
+            ```
+
+            ----
+
+            ## Subscribe
+
+            `.subscribe()` _optionally_ takes any of the three observer hooks
+
+            ```javascript
+            interval(1000).subscribe(
+              value => console.log(`next: ${value}`),
+              error => console.error(error),
+              () => console.log('complete')
+            );
+            ```
+
+            ----
+
+            ## There is a catch
+
+            >Observables will not run without an observer!
+
+            ---
+
+            ## Composing Observables
+
+            >"A library for **composing asynchronous and event-based programs** by using
+            observable sequences."
+
+            ----
+
+            ## Observable Operators
+
+            >Operators apply a transformation to the observable stream
+
+            ----
+
+            ## Operator Examples
+
+            ```javascript
+            // example of common operators; there are MANY more
+            map(v => `You have ${v} items`)
+            filter(v => v.isValid)
+            take(1)
+            skip(2)
+            ```
+
+            [Look at the built-in operators](https://rxjs-dev.firebaseapp.com/api)<!-- .element: target="_blank" -->
+
+            ----
+
+            ## Chaining with Pipes
+
+            ![simple observable](assets/simple-observable.gif)
+
+            ```javascript
+            interval(500).pipe(
+              map(x => x + 1),
+              filter(x => x % 2 === 0),
+              take(5)
+            );
+            ```
+
+            ![even-observable](assets/even-observable.gif)
+
+            ----
+
+            ### Think assembly lines
+
+            ![factory-gif](assets/assembly-line.gif) <!-- .element: height="400px"  -->
+
+            ----
+
+            ![pipe all the things](assets/pipe-things.jpg)
+
+            ---
+
+            ### Confused?
+
+            ![confused](assets/confused.gif)
+
+            ----
+
+            ## Exercise 2
+
+            An input box for an autocomplete
+
+            * [debounceTime](https://rxjs-dev.firebaseapp.com/api/operators/debounceTime)
+            * [distinctUntilChanged](https://rxjs-dev.firebaseapp.com/api/operators/distinctUntilChanged)
+            * [Open Visualizer](https://rxviz.tylerdev.io) <!-- .element: target="_blank" -->
+
+            ```javascript
+            const {debounceTime, distinctUntilChanged} = RxOperators;
+
+            createInput();
+            ```
+
+            ----
+
+            <!-- .slide: data-background-iframe="https://rxviz.tylerdev.io" data-background-interactive data-background-size="cover" -->
+
+            ---
+
+            ## Subscriptions
+
+            * Understand lifecycle of observables <!-- .element: class="fragment fade-up" -->
+            * May need to track subscriptions <!-- .element: class="fragment fade-up" -->
+            * **Warning:** Potential memory leaks <!-- .element: class="fragment fade-up" -->
+
+            ----
+
+            ## Closed observables
+
+            >Observables are considered closed when they are finished
+            producing values, or an error has occurred.
+
+            ----
+
+            ### Completed observables?
+
+            ![confused](assets/obama-what.gif)
+
+            ----
+
+            ## Memory leaks
+
+            >Closed observables do not retain references to callback functions.
+
+            ---
+
+            ## Let's practice
+
+            I'll help you!
+
+            ![penguin-slap](assets/penguin.gif) <!-- .element: height="200px"-->
+
+            ----
+
+            ## Exercise 3
+
+            * Identify asynchronous events
+            * Review an implementation
+            * [App Link](https://tyl-rxjs-pres.stackblitz.io) <!-- .element: target="_blank" -->
+            * [Implementation Link](https://stackblitz.com/edit/tyl-rxjs-pres?file=src/app/options-form/options-form.component.ts) <!-- .element: target="_blank" -->
+
+            ----
+
+            <!-- .slide: data-background-iframe="https://stackblitz.com/edit/tyl-rxjs-pres?file=src/app/options-form/options-form.component.ts" data-background-interactive data-background-size="cover" -->
+
+          </script> </section> </div> </div> <script src="src.c2c2b86f.js"></script> </body></html>
